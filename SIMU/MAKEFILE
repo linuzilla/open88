@@ -1,0 +1,31 @@
+# -- Makefile for ASM.EXE
+
+ASM     =  tasm
+CC      =  bcc
+LINKER  =  tlink
+LIBRARY =  tlib
+
+OPTION  =  -1 -O -G -Z -d -w
+
+all          :  asm.exe _simu.lib
+
+.c.obj       :
+                $(CC) -c $(OPTION) $<
+
+.cc.obj      :
+                $(CC) -c -P $(OPTION) $<
+
+.asm.obj     :
+                $(ASM) -ml -w2 $<
+
+.c.exe       :
+                $(CC) $(OPTION) $<
+
+.obj.lib     :
+                $(LIBRARY) $@-+$<
+
+_simu.lib    :  outdxal.obj simu.obj asmutil.obj
+                $(LIBRARY) /C $@ -+ outdxal
+                $(LIBRARY) /C $@ -+ simu
+                $(LIBRARY) /C $@ -+ asmutil
+

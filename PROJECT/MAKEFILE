@@ -1,0 +1,23 @@
+# Makefile
+
+ASM     =  tasm
+CC      =  bcc
+LINKER  =  tlink
+LIBRARY =  tlib
+
+LIBS    =  graphics.lib
+OBJS    =  egavga.obj
+
+OPTION  =  -1 -O -G -Z -d -w
+
+all          :  random.exe horse.exe mouse.exe well.exe reversi.exe unname.exe
+
+.c.obj       :
+                $(CC) -c $(OPTION) $<
+
+.asm.obj     :
+                $(ASM) -ml -w2 $<
+
+.c.exe       :
+                $(CC) $(OPTION) -DBGI $< $(OBJS) $(LIBS)
+
